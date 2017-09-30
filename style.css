@@ -1,0 +1,29 @@
+html, 
+body {
+  width: 100%;
+  height: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+table > tbody > tr > td {
+  text-align: center;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.keyWordFilterContainer {
+  display: none;
+}
+
+.keyWordFilter {
+  width: 85px;
+}
+
+.noDisplay {
+  display: none;
+}

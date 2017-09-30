@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Table Example</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+</head>
+<body>
+  <table class="js-table-hook">
+    <thead>
+      <tr>
+        <th><span class="js-show-key-word-filter">Books</span> <span class="cursor-pointer js-order-hook arrow-up">&#8710;</span></th>
+        <th><span class="js-show-key-word-filter">Code 1</span> <span class="cursor-pointer js-order-hook arrow-up">&#8710;</span></th>
+        <th><span class="js-show-key-word-filter">Code 2</span> <span class="cursor-pointer js-order-hook arrow-up">&#8710;</span></th>
+        <th><span class="js-show-key-word-filter">Random Number</span> <span class="cursor-pointer js-order-hook arrow-up data-is-number">&#8710;</span></th>
+      </tr>
+      <tr class="keyWordFilterContainer js-key-word-filter-container">
+        <th>
+          <input type="text" class="keyWordFilter js-key-word-filter">
+        </th>
+        <th>
+          <input type="text" class="keyWordFilter js-key-word-filter">
+        </th>
+        <th>
+          <input type="text" class="keyWordFilter js-key-word-filter">
+        </th>
+        <th>
+          <input type="text" class="keyWordFilter js-key-word-filter">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>EU-10b</td>
+        <td>HHYBx867EuUiYCPEkw3/7BBR</td>
+        <td>HHYBx867EuUiYCPEkw3/7BBR</td>
+        <td>10.00 £</td>
+      </tr>
+      <tr>
+        <td>EU-10d</td>
+        <td>nEI-MXTLPjxO9l8ZtNOeCBJh</td>
+        <td>nEI-MXTLPjxO9l8ZtNOeCBJh</td>
+        <td>5.00 £</td>
+      </tr>
+      <tr>
+        <td>EU-10c</td>
+        <td>jAjM2uk-EJgo2WvpoQSuEH4A</td>
+        <td>jAjM2uk-EJgo2WvpoQSuEH4A</td>
+        <td>7.00 £</td>
+      </tr>
+      <tr>
+        <td>EU-10a</td>
+        <td>x71/MxWfVN3E7RN9/YwLF9c-</td>
+        <td>x71/MxWfVN3E7RN9/YwLF9c-</td>
+        <td>15.00 £</td>
+      </tr>
+      <tr>
+        <td>EU-10e</td>
+        <td>LGTPIUMqbdNS3xRETuUrG8yx</td>
+        <td>LGTPIUMqbdNS3xRETuUrG8yx</td>
+        <td>25.00 £</td>
+      </tr>
+      <tr>
+        <td>EU-10f</td>
+        <td>uAnD0Ywqvnes7s7UPBWdFC7w</td>
+        <td>uAnD0Ywqvnes7s7UPBWdFC7w</td>
+        <td>25.00 £</td>
+      </tr>
+      <tr>
+        <td>AOTEB</td>
+        <td>0VBvmN2h5Ibav7jShvOvCHd1</td>
+        <td>0VBvmN2h5Ibav7jShvOvCHd1</td>
+        <td>12.00 £</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script type="text/javascript" src="scripts.js"></script>
+</body>
+</html>
