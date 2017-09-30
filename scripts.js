@@ -179,8 +179,8 @@
         var temp;
         var i, j;
 
-        for (i = len - 1 ; i >= 0; i--) {
-            for(j = 1; j <= i; j++) {
+        for (i = len - 1 ; numberComparison(-1 , i) ; i--) {
+            for (j = 1; numberComparison(j , (i + 1)) ; j++) {
                 if(isNumber) {
                     if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
                         temp = values[j-1];
