@@ -185,7 +185,7 @@
                 updateValues = false;
 
                 if(isNumber) {
-                    if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
+                    if (numberComparison(parseFloat(values[j].value), parseFloat(values[j-1].value)) === 1) {
                         updateValues = true;
                     }
                 } else {
