@@ -336,9 +336,7 @@
         sortingOrder = getSortingOrder($(this));        
         isNumber = isDataNumber($(this));
         tdValues = getTdValues(columnIndex, isNumber);
-        console.log(tdValues);
         tdValues = sortValues(tdValues, isNumber);
-        console.log(tdValues);
         updateTable(tdValues, sortingOrder);
     }
 
