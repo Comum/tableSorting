@@ -10,6 +10,8 @@
     
     var tableHook = 'js-table-hook';
     var tableTrs = tableHook + ' tbody tr';
+    var arrowDown = '&#8711;';
+    var arrowUp = '&#8710';
 
     /**
      * returns:
@@ -59,13 +61,6 @@
     }
 
     /**
-     * Sorting table function
-     */
-    function tableSorting() {
-        alert('sort table');
-    }
-
-    /**
      * Shows/hides the word fields to filter the table
      */
     function toggleKeyWordFilters() {
@@ -89,7 +84,6 @@
             return;
         }
 
-        // get column index
         columnIndex = getColumnIndex($(this));
 
         // hide relevant tr
@@ -108,6 +102,170 @@
                     });
             }
         }
+    }
+
+    /**
+     * Returns the order of sorting
+     *      1: ASC (a -> z)
+     *      2: DESC (z -> a)
+     * @param {jQuery Object} $el
+     * @returns {Integer}
+     */
+    function getSortingOrder($el) {
+        if ($el.hasClass('arrow-up')) {
+            $el
+                .removeClass('arrow-up')
+                .addClass('arrow-down')
+                .html(arrowDown);
+            return 1;
+        }
+
+        $el
+            .removeClass('arrow-down')
+            .addClass('arrow-up')
+            .html(arrowUp);
+        return 2;
+    }
+
+    /**
+     * Checks if element has class `.data-is-number`
+     * 
+     * @param {jQuery Object} $el
+     * @returns {Integer}
+     */
+    function isDataNumber($el) {
+        if ($el.hasClass('data-is-number')) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    /**
+     * Returns object of td values of column to sort
+     * object: {
+     *      index:
+     *      value:
+     * }
+     * 
+     * @param {Integer} columnIndex
+     * @param {Boolean} isNumber
+     * @returns {array}
+     */
+    function getTdValues(columnIndex, isNumber) {
+        var values = [];
+
+        $('.' + tableTrs)
+            .find('td:eq(' + columnIndex + ')')
+            .each(function(index) {
+                if (isNumber) {
+                  values.push({'index': index, 'value': $(this).text().slice(0, -1).trim()});
+                } else {
+                 values.push({'index': index, 'value': $(this).text()}); 
+                }
+              });
+        return values;
+    }
+
+    /**
+     * Sorts the table
+     * 
+     * @param {Object} values 
+     * @param {Boolean} isNumber
+     * @returns {Object} 
+     */
+    function sortValues(values, isNumber) {
+        var len = values.length;
+        var temp;
+        var i, j;
+
+        for (i = len - 1 ; i >= 0; i--) {
+            for(j = 1; j <= i; j++) {
+                if(isNumber) {
+                    if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
+                        temp = values[j-1];
+                        values[j-1] = values[j];
+                        values[j] = temp;
+                        // criar boolean aqui, condicoes diferentes accoes iguais, so uma vez entao
+                    }
+                } else {
+                    if (values[j-1].value > values[j].value) {
+                        temp = values[j-1];
+                        values[j-1] = values[j];
+                        values[j] = temp;
+                    }
+                }
+            }
+        }
+
+        return values;
+        /*var len = values.length;
+        var temp;
+        // for (i = len - 1 ; numberComparison(-1 , i) ; i--)
+        for (i = len - 1 ; i >= 0; i--) {
+          // for(j = 1; numberComparison(j , (i + 1)) ; j++) {
+          for(j = 1; j <= i; j++) {
+            if(isNumber) {
+              // if ( numberComparison( parseFloat(values[j].value), parseFloat(values[j-1].value) ) )
+              if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
+                temp = values[j-1];
+                values[j-1] = values[j];
+                values[j] = temp;
+              }
+            } else {
+              if (numberComparison(values[j].value, values[j-1].value))
+             // if (values[j-1].value > values[j].value) {
+                temp = values[j-1];
+                values[j-1] = values[j];
+                values[j] = temp;
+              } 
+            }
+          }*/
+    }
+
+    /**
+     * Updates the table with the proper order
+     * 
+     * @param {Object} values
+     * @param {Integer} sortingOrder 
+     */
+    function updateTable(values, sortingOrder) {
+        var trValues = $('.' + tableTrs);
+        var tableBody = $('.' + tableHook + ' tbody');
+        tableBody.empty();
+        
+        if (sortingOrder === 2) {
+            for (i = (values.length - 1) ; numberComparison(-1, i) ; i--) {
+                tableBody.append(trValues[values[i].index]);
+            }
+        } else {
+            for (i = 0 ; numberComparison(i, values.length) ; i++) {
+                tableBody.append(trValues[values[i].index]);
+            }
+        }
+    }
+
+    /**
+     * Sorting table function
+     */
+    function tableSorting() {
+        var sortingOrder = 1;
+        var columnIndex;
+        var isNumber;
+        var tdValues;
+
+        columnIndex = getColumnIndex($(this));
+        if (numberComparison(columnIndex, -1) === 1) {
+            return;
+        }
+
+        sortingOrder = getSortingOrder($(this));        
+        isNumber = isDataNumber($(this));
+        tdValues = getTdValues(columnIndex, isNumber);
+        console.log(tdValues);
+        tdValues = sortValues(tdValues, isNumber);
+        console.log(tdValues);
+        updateTable(tdValues, sortingOrder);
     }
 
     // add sorting event listener 
