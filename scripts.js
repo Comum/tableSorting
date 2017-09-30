@@ -14,12 +14,6 @@
     var arrowUp = '&#8710';
 
     /**
-     * returns:
-     *	 0 if same value
-    *	-1 if left bigger
-    *	 1 if right bigger
-    */
-    /**
      * Compares two numbers and checks which is higher
      * Returns:
      *      0 if same value
@@ -42,6 +36,104 @@
         }
 
         return -1;
+    }
+
+    /**
+     * Returns char's ASCII code
+     * 
+     * @param {Char} char
+     * @returns {Integer}
+     */
+    function getAsciiValue (char) {
+        return char.charCodeAt(0);
+    }
+    
+    /**
+     * Gets the sum of the ASCII values of the string passed
+     * 
+     * @param {String} word
+     * @returns {Integer}
+     */
+    function getWordInAscii(word) {
+        var sum = 0;
+
+        word
+            .split('')
+            .map(getAsciiValue)
+            .forEach(function (value) {
+                sum = sum + parseInt(value, 10);
+            });
+    
+        return sum;
+    }
+    
+    /**
+     * returns:
+     *	 0 if same value
+     *	-1 if left word comes first
+     *	 1 if right word comes first
+     */
+
+    /**
+     * Returns a number that means what word comes first ('smallest')
+     *      0  same value
+     *      -1 left word comes first
+     *      1  right word comes first
+     * 
+     * @param {String} _left
+     * @param {String} _right
+     * @returns {Integer}
+     */
+    function wordComparison(_left, _right) {
+        var diff;
+        var left = _left.toLowerCase();
+        var right = _right.toLowerCase();
+        var leftValue;
+        var rightValue;
+        var comparison;
+        var index = 0;
+        var equalWords = true;
+        var wordIndex;
+    
+        // check if words are the same (they are both lower case)
+        if (left === right) {
+            return 0;
+        }
+    
+        // check if word in contained inside the other
+        comparison = numberComparison(left.length, right.length);
+    
+        if (comparison === -1) {
+            wordIndex = left.indexOf(right);
+            if ((wordIndex !== -1) && (wordIndex !== 0)) {
+                // right word comes first
+                return 1;
+            }
+        } else if (comparison === 1) {
+            wordIndex = right.indexOf(left);
+            if ((wordIndex !== -1) && (wordIndex !== 0)) {
+                // left word comes first
+                return -1;
+            }
+        }
+    
+        // compare words
+        // get index where words start to get different
+        while(equalWords) {
+            if (left[index] !== right[index]) {
+                equalWords = false;
+            }
+    
+            index++;
+        }
+    
+        left = left.substring(0, index);
+        right = right.substring(0, index);
+    
+        leftValue = getWordInAscii(left);
+        rightValue = getWordInAscii(right);
+            
+        return numberComparison(leftValue, rightValue);
     }
 
     /**
@@ -189,7 +281,7 @@
                         updateValues = true;
                     }
                 } else {
-                    if (values[j-1].value > values[j].value) {
+                    if (wordComparison(values[j-1].value, values[j].value) === 1) {
                         updateValues = true;
                     }
                 }
@@ -203,28 +295,6 @@
         }
 
         return values;
-        /*var len = values.length;
-        var temp;
-        // for (i = len - 1 ; numberComparison(-1 , i) ; i--)
-        for (i = len - 1 ; i >= 0; i--) {
-          // for(j = 1; numberComparison(j , (i + 1)) ; j++) {
-          for(j = 1; j <= i; j++) {
-            if(isNumber) {
-              // if ( numberComparison( parseFloat(values[j].value), parseFloat(values[j-1].value) ) )
-              if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
-                temp = values[j-1];
-                values[j-1] = values[j];
-                values[j] = temp;
-              }
-            } else {
-              if (numberComparison(values[j].value, values[j-1].value))
-             // if (values[j-1].value > values[j].value) {
-                temp = values[j-1];
-                values[j-1] = values[j];
-                values[j] = temp;
-              } 
-            }
-          }*/
     }
 
     /**
