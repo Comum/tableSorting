@@ -177,23 +177,27 @@
     function sortValues(values, isNumber) {
         var len = values.length;
         var temp;
+        var updateValues;
         var i, j;
 
         for (i = len - 1 ; numberComparison(-1 , i) ; i--) {
             for (j = 1; numberComparison(j , (i + 1)) ; j++) {
+                updateValues = false;
+
                 if(isNumber) {
                     if (parseFloat(values[j-1].value) > parseFloat(values[j].value)) {
-                        temp = values[j-1];
-                        values[j-1] = values[j];
-                        values[j] = temp;
-                        // criar boolean aqui, condicoes diferentes accoes iguais, so uma vez entao
+                        updateValues = true;
                     }
                 } else {
                     if (values[j-1].value > values[j].value) {
-                        temp = values[j-1];
-                        values[j-1] = values[j];
-                        values[j] = temp;
+                        updateValues = true;
                     }
+                }
+
+                if (updateValues) {
+                    temp = values[j-1];
+                    values[j-1] = values[j];
+                    values[j] = temp;
                 }
             }
         }
