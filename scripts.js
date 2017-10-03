@@ -105,15 +105,19 @@
     
         if (comparison === -1) {
             wordIndex = left.indexOf(right);
-            if ((wordIndex !== -1) && (wordIndex !== 0)) {
-                // right word comes first
-                return 1;
+            if (wordIndex !== -1) {
+                if (wordIndex !== 0) {
+                    // right word comes first
+                    return 1;
+                }   
             }
         } else if (comparison === 1) {
             wordIndex = right.indexOf(left);
-            if ((wordIndex !== -1) && (wordIndex !== 0)) {
-                // left word comes first
-                return -1;
+            if (wordIndex !== -1) {
+                if (wordIndex !== 0) {
+                    // left word comes first
+                    return -1;
+                }
             }
         }
     
